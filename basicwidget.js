@@ -1,36 +1,50 @@
 // STEP 1.) Fill out the bellow const's
 // STEP 2.) Create Account at openweathermap website for API Key and paste in line 16.
 const user = "NAME" // You Name Here
-const cityID = "Honolulu, US" // Your city, Country initial 
+const cityID = "YOUR CITY NAME" // Enter your city name here
 const telegram = "LanguageArtsGrade" // Telegram Username Here
 const github = "curnal" // Github Username here (displayes follower count)
- 
-////////////////////////////////////////////
-
+const api = 'API-KEY-HERE'; // Openweatherapp API Key Here!
+//////////////////////////////////////////////////////////////////////////////////////
 const data = await fetchData()
 const widget = createWidget(data)
 Script.setWidget(widget)
 Script.complete()
- 
-function weatherBalloon(cityID) {
-    var key = 'API-KEY-HERE'; //Create Account at openweathermap website for API Key
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityID}&appid=${key}`)  
-    .then(function(resp) { return resp.json() }) // Convert data to json
-    .then(function(data) {
-        drawWeather(data); // Call drawWeather
+
+function getExtra(){
+  let long;
+  let lat;
+  if (navigator.geolocation) {
+   navigator.geolocation.getCurrentPosition((position) => {
+    long = position.coords.longitude;
+    lat = position.coords.latitude;
+    const base = `https://api.openweathermap.org/data/2.5/weatherlat=${lat}&lon=${long}&appid=${api}&units=metric`;
+    fetch(base).then((response) => {
+     return response.json();
     })
-    .catch(function() {
-        // catch any errors
+    .then((data) => {
+      const { temp } = data.main;
+      const place = data.name;
+      const { description, icon } = data.weather[0];
+      const { sunrise, sunset } = data.sys;
+     
+      const iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+      const fahrenheit = (temp * 9) / 5 + 32;
+     
+      //iconImg.src = iconUrl;
+      //loc.textContent = `${place}`;
+      //desc.textContent = `${description}`;
+      //tempC.textContent = `${temp.toFixed(2)} °C`;
+      //tempF.textContent = `${fahrenheit.toFixed(2)} °F`;
+      
+     return fahrenheit;
+
     });
+   });
+
+  }
 }
- 
-function drawWeather(d) {
-    var celcius = Math.round(parseFloat(d.main.temp)-273.15);
-    var fahrenheit = Math.round(((parseFloat(d.main.temp)-273.15)*1.8)+32); 
-   
-  return fahrenheit;
-}
- 
+
 function createWidget(data) {
   console.log(data)
   const w = new ListWidget()
@@ -70,7 +84,7 @@ function createWidget(data) {
   locationLine.textColor = new Color("#7dbbae")
   locationLine.font = new Font("Menlo", 11)
   
-  const weatherTest = w.addText(`[☁️] Weather: ${weatherBalloon()}`)
+  const weatherTest = w.addText(`[☁️] Weather: ${getExtra()}`)
   weatherTest.textColor = new Color("#7dbbae")
   weatherTest.font = new Font("Menlo", 11)
   return w
