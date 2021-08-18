@@ -15,7 +15,7 @@ Script.complete()
 fetch("https://ip-geolocation-ipwhois-io.p.rapidapi.com/json/", {
 	"method": "GET",
 	"headers": {
-		"x-rapidapi-key": "cfa914a2b5mshaabb843dc334288p133953jsnc58bdfc05419",
+		"x-rapidapi-key": ${geoApi},
 		"x-rapidapi-host": "ip-geolocation-ipwhois-io.p.rapidapi.com"
 	}
 })
