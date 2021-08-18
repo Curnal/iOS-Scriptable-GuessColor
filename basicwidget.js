@@ -5,11 +5,26 @@ const cityID = "YOUR CITY NAME" // Enter your city name here
 const telegram = "LanguageArtsGrade" // Telegram Username Here
 const github = "curnal" // Github Username here (displayes follower count)
 const api = 'API-KEY-HERE'; // Openweatherapp API Key Here!
+const geoApi = 'API-KEY-HERE'; // Get API Key from here: https://rapidapi.com/xakageminato/api/ip-geolocation-ipwhois-io
 //////////////////////////////////////////////////////////////////////////////////////
 const data = await fetchData()
 const widget = createWidget(data)
 Script.setWidget(widget)
 Script.complete()
+
+fetch("https://ip-geolocation-ipwhois-io.p.rapidapi.com/json/", {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": "cfa914a2b5mshaabb843dc334288p133953jsnc58bdfc05419",
+		"x-rapidapi-host": "ip-geolocation-ipwhois-io.p.rapidapi.com"
+	}
+})
+.then(response => {
+	console.log(response);
+})
+.catch(err => {
+	console.error(err);
+});
 
 function getExtra(){
   let long;
