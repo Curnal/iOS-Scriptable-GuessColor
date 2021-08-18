@@ -8,6 +8,7 @@ let board = [
   [STATE_EMPTY, STATE_EMPTY],
 ]
 let WINNER = null
+let HAS_EMPTY_SQUARES = true
 let table = new UITable();
 updateTable()
 tbale.present()
