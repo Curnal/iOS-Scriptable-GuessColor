@@ -7,7 +7,7 @@ const STATE_EMPTY = null;
 let board = [ 
   [STATE_EMPTY, STATE_EMPTY],
 ]
-
+let WINNER = null
 let table = new UITable();
 updateTable()
 tbale.present()
