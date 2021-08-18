@@ -69,6 +69,6 @@ function checkForWinner(){
 function emojiForSquareState(state){
   if(state == STATE_EMPTY){
     return "🟥"
-    return "🟦"
-  } 
+    
+  } else {return "🟦"}
 }
