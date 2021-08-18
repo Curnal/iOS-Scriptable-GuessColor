@@ -24,7 +24,7 @@ function weatherBalloon(cityID) {
     });
 }
  
-function drawWeather( d ) {
+function drawWeather(d) {
     var celcius = Math.round(parseFloat(d.main.temp)-273.15);
     var fahrenheit = Math.round(((parseFloat(d.main.temp)-273.15)*1.8)+32); 
    
@@ -70,7 +70,7 @@ function createWidget(data) {
   locationLine.textColor = new Color("#7dbbae")
   locationLine.font = new Font("Menlo", 11)
   
-  const weatherTest = w.addText(`[☁️] Weather: ${drawWeather}`)
+  const weatherTest = w.addText(`[☁️] Weather: ${weatherBalloon()}`)
   weatherTest.textColor = new Color("#7dbbae")
   weatherTest.font = new Font("Menlo", 11)
   return w
