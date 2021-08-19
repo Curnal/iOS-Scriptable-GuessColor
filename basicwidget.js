@@ -12,10 +12,12 @@ try {
 const LAT = latLong.latitude
 const LON = latLong.longitude
 var response = await Location.reverseGeocode(LAT, LON)
+var cityName = response[0].postalAddress.city
 var LOCATION_NAME = response[0].postalAddress.city + ", " + response[0].postalAddress.state
 log(LOCATION_NAME)
  
- 
+
+
 const data = await fetchData()
 const widget = new ListWidget()
 createWidget(data)
@@ -24,7 +26,7 @@ createWidget(data)
 Script.setWidget(widget)
 Script.complete()
  
- 
+
  
  
 function createWidget(data) {
@@ -83,7 +85,16 @@ async function fetchData() {
   
   
 }
- 
+
+async function fetchWeather() {
+ const url = `api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api}`
+ const request = new Request(url)
+ const res = await request.loadJSON()
+ console.log(res)
+}
+
+fetchWeather();
+
 function renderBattery() {
   const batteryLevel = Device.batteryLevel()
   const juice = "#".repeat(Math.floor(batteryLevel * 8))
