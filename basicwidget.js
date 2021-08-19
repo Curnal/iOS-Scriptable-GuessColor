@@ -5,59 +5,22 @@ const cityID = "YOUR CITY NAME" // Enter your city name here
 const telegram = "LanguageArtsGrade" // Telegram Username Here
 const github = "curnal" // Github Username here (displayes follower count)
 const api = 'API-KEY-HERE'; // Openweatherapp API Key Here!
-const geoApi = 'API-KEY-HERE'; // Get API Key from here: https://rapidapi.com/xakageminato/api/ip-geolocation-ipwhois-io
+const geoApi = 'API-KEY-HERE'; // Get API Key from here: https://developers.google.com/maps/documentation/geolocation/overview
+
 //////////////////////////////////////////////////////////////////////////////////////
 const data = await fetchData()
 const widget = createWidget(data)
 Script.setWidget(widget)
 Script.complete()
 
-fetch("https://ip-geolocation-ipwhois-io.p.rapidapi.com/json/", {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": ${geoApi},
-		"x-rapidapi-host": "ip-geolocation-ipwhois-io.p.rapidapi.com"
-	}
-})
-.then(response => {
-	console.log(response);
-})
-.catch(err => {
-	console.error(err);
-});
-
-function getExtra(){
-  let long;
-  let lat;
-  if (navigator.geolocation) {
-   navigator.geolocation.getCurrentPosition((position) => {
-    long = position.coords.longitude;
-    lat = position.coords.latitude;
-    const base = `https://api.openweathermap.org/data/2.5/weatherlat=${lat}&lon=${long}&appid=${api}&units=metric`;
-    fetch(base).then((response) => {
-     return response.json();
-    })
-    .then((data) => {
-      const { temp } = data.main;
-      const place = data.name;
-      const { description, icon } = data.weather[0];
-      const { sunrise, sunset } = data.sys;
-     
-      const iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`;
-      const fahrenheit = (temp * 9) / 5 + 32;
-     
-      //iconImg.src = iconUrl;
-      //loc.textContent = `${place}`;
-      //desc.textContent = `${description}`;
-      //tempC.textContent = `${temp.toFixed(2)} °C`;
-      //tempF.textContent = `${fahrenheit.toFixed(2)} °F`;
-      
-     return fahrenheit;
-
-    });
-   });
-
-  }
+async function fetchSecond() {
+  const url = `https://www.googleapis.com/geolocation/v1/geolocate?key=${geoApi}`
+  const request = new Request(url)
+  const res = await request.loadJSON()
+  let lat = res.location.lat
+  let lng = res.location.lng
+  
+  
 }
 
 function createWidget(data) {
